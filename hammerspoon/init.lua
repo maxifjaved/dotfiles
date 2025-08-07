@@ -274,9 +274,34 @@ end
 -- Hotkeys: Only work when F18 is held down
 -- ============================================================================
 
+-- F18 + F for Finder
+hyperMode:bind({}, "f", function()
+    cycleAppWindows("Finder")
+end)
+
+-- F18 + W for WezTerm
+hyperMode:bind({}, "w", function()
+    cycleAppWindows("WezTerm")
+end)
+
+-- F18 + A for Arc
+hyperMode:bind({}, "a", function()
+    cycleAppWindows("Arc")
+end)
+
+-- F18 + B for Brave Browser
+hyperMode:bind({}, "b", function()
+    cycleAppWindows("Brave Browser")
+end)
+
 -- F18 + T for Trae
 hyperMode:bind({}, "t", function()
     cycleAppWindows("Trae")
+end)
+
+-- F18 + C for Google Chrome
+hyperMode:bind({}, "c", function()
+    cycleAppWindows("Google Chrome")
 end)
 
 -- F18 + D for Debug
@@ -325,16 +350,6 @@ hyperMode:bind({}, "r", function()
     hs.alert.show("Window cycle state reset!")
 end)
 
--- ============================================================================
--- Optional: Add more apps
--- ============================================================================
--- hyperMode:bind({}, "s", function()
---     cycleAppWindows("Safari")
--- end)
-
--- hyperMode:bind({}, "c", function()
---     cycleAppWindows("Chrome")
--- end)
 
 -- ============================================================================
 -- Alternative approach if the modal doesn't work with your Karabiner setup
