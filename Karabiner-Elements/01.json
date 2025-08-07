@@ -1,0 +1,15 @@
+{
+    "description": "Right Command => F18",
+    "manipulators": [
+        {
+            "from": { "key_code": "right_command" },
+            "to": [
+                {
+                    "key_code": "f18",
+                    "lazy": true
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
