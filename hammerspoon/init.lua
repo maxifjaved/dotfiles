@@ -22,11 +22,9 @@ local hyperMode = hs.hotkey.modal.new()
 -- When F18 is pressed, enter "hyper mode"
 hs.hotkey.bind({}, "f18",
     function()
-        hs.alert.show("⌨️ F18 down → HYPER ON", 0.5)
         hyperMode:enter()
     end,
     function()
-        hs.alert.show("⌨️ F18 up → HYPER OFF", 0.5)
         hyperMode:exit()
     end
 )
@@ -75,29 +73,13 @@ local function filterAndSortWindows(windows)
         
         if isValid then
             table.insert(validWindows, window)
-            print(string.format("DEBUG: ACCEPTED window: %s (ID: %s, Space: %s, Display: %s)", 
-                window.title or "No title", tostring(window.id), 
-                tostring(window.space), tostring(window.display)))
-        else
-            print(string.format("DEBUG: REJECTED window: %s - %s", 
-                window.title or "No title", table.concat(reasons, ", ")))
         end
     end
 
-    -- Sort by predictable criteria: space first, then by position, then title
+    -- Sort by stable criteria: window ID for consistent ordering
+    -- This ensures the same windows always appear in the same order
     table.sort(validWindows, function(a, b)
-        if a.space ~= b.space then
-            return a.space < b.space
-        end
-        -- Sort by position (top-left to bottom-right)
-        if a.frame.y ~= b.frame.y then
-            return a.frame.y < b.frame.y
-        end
-        if a.frame.x ~= b.frame.x then
-            return a.frame.x < b.frame.x
-        end
-        -- Fallback to title for consistent ordering
-        return (a.title or "") < (b.title or "")
+        return a.id < b.id
     end)
 
     return validWindows
@@ -139,7 +121,7 @@ local function getNextWindowIndex(state, currentWindowID, windowList)
 
     -- Check for recent cycling pattern to prevent ping-ponging
     local now = os.time()
-    if now - state.lastCycleTime < 2 then -- Within 2 seconds
+    if (state.lastCycleTime and now - state.lastCycleTime < 2) then -- Within 2 seconds
         table.insert(state.cycleHistory, currentWindowID)
         -- Keep only last 4 entries
         if #state.cycleHistory > 4 then
@@ -181,7 +163,7 @@ local function getNextWindowIndex(state, currentWindowID, windowList)
     if nextIndex > #windowList then
         nextIndex = 1
     end
-
+    
     return nextIndex
 end
 
@@ -191,38 +173,25 @@ end
 local function cycleAppWindows(appName)
     hs.task.new(YABAI_PATH, function(exitCode, stdOut, stdErr)
         if exitCode ~= 0 then
-            print("Error: yabai query failed - " .. (stdErr or ""))
             hs.alert.show("yabai error!")
             return
         end
 
         local ok, allWindows = pcall(hs.json.decode, stdOut)
         if not ok then
-            print("Error: Could not decode JSON from yabai")
             return
         end
 
         -- Filter to get only windows for this app
         local appWindows = {}
-        print(string.format("DEBUG: Looking for app '%s' in %d total windows", appName, #allWindows))
         
         for _, windowData in ipairs(allWindows) do
-            -- Debug: show app names to help identify the correct app name
-            if windowData.app then
-                print(string.format("DEBUG: Found app '%s' with window title '%s'", 
-                    windowData.app, windowData.title or "No title"))
-            end
-            
             if windowData.app == appName then
                 table.insert(appWindows, windowData)
-                print(string.format("DEBUG: Matched window for %s: %s", appName, windowData.title or "No title"))
             end
         end
-        
-        print(string.format("DEBUG: Found %d windows for app '%s'", #appWindows, appName))
 
         if #appWindows == 0 then
-            print(string.format("No %s windows found. Attempting to launch...", appName))
             hs.alert.show(string.format("Launching %s...", appName))
             hs.application.launchOrFocus(appName)
             local state = getAppState(appName)
@@ -232,13 +201,10 @@ local function cycleAppWindows(appName)
         end
 
         -- Use enhanced filtering and sorting
-        print(string.format("DEBUG: Before filtering: %d windows", #appWindows))
         appWindows = filterAndSortWindows(appWindows)
-        print(string.format("DEBUG: After filtering: %d windows", #appWindows))
 
         if #appWindows == 0 then
             hs.alert.show(string.format("No valid %s windows to cycle", appName))
-            print(string.format("DEBUG: No windows passed filtering for app '%s'", appName))
             return
         end
 
@@ -262,6 +228,7 @@ local function cycleAppWindows(appName)
 
         -- Get next window using enhanced logic that prevents ping-ponging
         local nextIndex
+        
         if currentFocusedID then
             nextIndex = getNextWindowIndex(state, currentFocusedID, appWindows)
         else
@@ -285,13 +252,10 @@ local function cycleAppWindows(appName)
         hs.alert.show(string.format("%s: %d/%d - %s%s",
             appName, nextIndex, #appWindows, title or "Untitled", spaceInfo))
 
-        print(string.format("Focusing %s window #%d (ID: %d, Space: %d, Title: %s)",
-            appName, nextIndex, windowToFocus.id, windowToFocus.space, windowToFocus.title or "Untitled"))
 
         -- Focus the selected window with improved error handling
         hs.task.new(YABAI_PATH, function(exitCode, stdOut, stdErr)
             if exitCode ~= 0 then
-                print("Error focusing window: " .. (stdErr or ""))
                 -- Try to focus the space first, then the window
                 hs.task.new(YABAI_PATH, nil, {
                     "-m", "space", "--focus", tostring(windowToFocus.space)
@@ -359,7 +323,6 @@ end)
 hyperMode:bind({}, "r", function()
     windowCycleState = {}
     hs.alert.show("Window cycle state reset!")
-    print("Window cycle state has been reset")
 end)
 
 -- ============================================================================
