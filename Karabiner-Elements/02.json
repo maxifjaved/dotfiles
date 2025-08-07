@@ -1,0 +1,456 @@
+{
+    "description": "Hyper + Vim Movement",
+    "enabled": true,
+    "manipulators": [
+        {
+            "description": "Hyper + h → Left",
+            "from": {
+                "key_code": "h",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [{ "key_code": "left_arrow" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + j → Down",
+            "from": {
+                "key_code": "j",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [{ "key_code": "down_arrow" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + k → Up",
+            "from": {
+                "key_code": "k",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [{ "key_code": "up_arrow" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + l → Right",
+            "from": {
+                "key_code": "l",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [{ "key_code": "right_arrow" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + w → Next Word",
+            "from": {
+                "key_code": "w",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["option"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + b → Previous Word",
+            "from": {
+                "key_code": "b",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "left_arrow",
+                    "modifiers": ["option"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + e → End of Word",
+            "from": {
+                "key_code": "e",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["option"]
+                },
+                { "key_code": "left_arrow" }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + 0 → Beginning of Line",
+            "from": {
+                "key_code": "0",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "left_arrow",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + 4 → End of Line",
+            "from": {
+                "key_code": "4",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + x → Delete Character",
+            "from": {
+                "key_code": "x",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [{ "key_code": "delete_forward" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + x → Backspace",
+            "from": {
+                "key_code": "x",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [{ "key_code": "delete_or_backspace" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + d → Delete to End of Line",
+            "from": {
+                "key_code": "d",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command", "shift"]
+                },
+                { "key_code": "delete_or_backspace" }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + y → Copy Line",
+            "from": {
+                "key_code": "y",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "left_arrow",
+                    "modifiers": ["command"]
+                },
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command", "shift"]
+                },
+                {
+                    "key_code": "c",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + p → Paste",
+            "from": {
+                "key_code": "p",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "v",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + p → Paste Above",
+            "from": {
+                "key_code": "p",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                { "key_code": "up_arrow" },
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command"]
+                },
+                { "key_code": "return_or_enter" },
+                {
+                    "key_code": "v",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + h → Select Left",
+            "from": {
+                "key_code": "h",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "left_arrow",
+                    "modifiers": ["shift"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + j → Select Down",
+            "from": {
+                "key_code": "j",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "down_arrow",
+                    "modifiers": ["shift"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + k → Select Up",
+            "from": {
+                "key_code": "k",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "up_arrow",
+                    "modifiers": ["shift"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + l → Select Right",
+            "from": {
+                "key_code": "l",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["shift"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + t → Next Tab",
+            "from": {
+                "key_code": "t",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "tab",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + t → Previous Tab",
+            "from": {
+                "key_code": "t",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "tab",
+                    "modifiers": ["command", "shift"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + u → Page Up",
+            "from": {
+                "key_code": "u",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [{ "key_code": "page_up" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + d → Page Down",
+            "from": {
+                "key_code": "d",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [{ "key_code": "page_down" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + g → Top of Document",
+            "from": {
+                "key_code": "g",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "up_arrow",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + g → Bottom of Document",
+            "from": {
+                "key_code": "g",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "down_arrow",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + u → Undo",
+            "from": {
+                "key_code": "u",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "z",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + r → Redo",
+            "from": {
+                "key_code": "r",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "z",
+                    "modifiers": ["command", "shift"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + slash → Search/Find",
+            "from": {
+                "key_code": "slash",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "f",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + n → Next Search Result",
+            "from": {
+                "key_code": "n",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "g",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + n → Previous Search Result",
+            "from": {
+                "key_code": "n",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "g",
+                    "modifiers": ["command", "shift"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + a → Append (Move Right)",
+            "from": {
+                "key_code": "a",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [{ "key_code": "right_arrow" }],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + a → Append End of Line",
+            "from": {
+                "key_code": "a",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + o → Open Line Below",
+            "from": {
+                "key_code": "o",
+                "modifiers": { "mandatory": ["f19"] }
+            },
+            "to": [
+                {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command"]
+                },
+                { "key_code": "return_or_enter" }
+            ],
+            "type": "basic"
+        },
+        {
+            "description": "Hyper + shift + o → Open Line Above",
+            "from": {
+                "key_code": "o",
+                "modifiers": { "mandatory": ["f19", "shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "left_arrow",
+                    "modifiers": ["command"]
+                },
+                { "key_code": "return_or_enter" },
+                { "key_code": "up_arrow" }
+            ],
+            "type": "basic"
+        }
+    ]
+}
